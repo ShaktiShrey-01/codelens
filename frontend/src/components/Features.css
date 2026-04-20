@@ -1,0 +1,127 @@
+.features-section {
+  background: transparent;
+  padding: 96px 24px;
+}
+
+.features-lead {
+  max-width: 520px;
+}
+
+.feats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.feat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 28px 24px;
+  border: 1px solid rgba(237, 232, 255, 0.28);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 2px 16px rgba(123, 57, 252, 0.05);
+  transition: transform 0.22s, box-shadow 0.22s;
+}
+
+.feat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 36px rgba(123, 57, 252, 0.13);
+}
+
+.feat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+}
+
+.feat-title {
+  color: #fff;
+  font-family: 'Manrope', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.feat-body {
+  color: rgba(255, 255, 255, 0.78);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.cta-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 52px;
+  padding: 48px 40px;
+  border-radius: 24px;
+  background: linear-gradient(130deg, rgba(43, 35, 68, 0.72) 0%, rgba(123, 57, 252, 0.72) 100%);
+  backdrop-filter: blur(18px);
+}
+
+.cta-banner-title {
+  margin-bottom: 8px;
+  color: #fff;
+  font-family: 'Instrument Serif', serif;
+  font-size: 32px;
+}
+
+.cta-banner-copy {
+  color: rgba(255, 255, 255, 0.72);
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+}
+
+.cta-banner-btns {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cta-primary {
+  background: #fff;
+  color: #7b39fc;
+  font-weight: 700;
+}
+
+.cta-secondary {
+  padding: 13px 26px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-family: 'Cabin', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .feats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cta-banner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .cta-banner-btns {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 540px) {
+  .feats-grid {
+    grid-template-columns: 1fr;
+  }
+}
