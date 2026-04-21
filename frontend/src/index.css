@@ -13,7 +13,30 @@ html {
 body {
 	margin: 0;
 	font-family: 'Inter', sans-serif;
-	background: #000;
+	background: var(--site-background);
+	color: var(--site-text);
+}
+
+:root {
+	--site-background: #020309;
+	--site-background-alt: #04060b;
+	--site-surface: rgba(5, 10, 24, 0.72);
+	--site-surface-alt: rgba(7, 14, 31, 0.76);
+	--site-panel: rgba(11, 16, 30, 0.72);
+	--site-border: rgba(123, 57, 252, 0.32);
+	--site-border-strong: rgba(123, 57, 252, 0.55);
+	--site-text: #f4f7ff;
+	--site-text-muted: rgba(197, 209, 236, 0.74);
+	--site-accent: #7b39fc;
+	--site-accent-strong: #8f52ff;
+	--site-accent-soft: rgba(123, 57, 252, 0.18);
+	--site-link: #8ebdff;
+	--site-cursor: #000000;
+}
+
+body,
+#root {
+	background: var(--site-background);
 }
 
 a,
@@ -116,8 +139,8 @@ button {
 	padding: 13px 26px;
 	border: none;
 	border-radius: 10px;
-	background: #7b39fc;
-	color: #fff;
+	background: var(--site-accent);
+	color: var(--site-text);
 	font-family: 'Cabin', sans-serif;
 	font-size: 16px;
 	font-weight: 500;
@@ -127,15 +150,15 @@ button {
 }
 
 .btn-primary:hover {
-	background: #8f52ff;
+	background: var(--site-accent-strong);
 }
 
 .btn-dark {
 	padding: 13px 26px;
 	border: none;
 	border-radius: 10px;
-	background: #2b2344;
-	color: #f6f7f9;
+	background: color-mix(in srgb, var(--site-accent) 18%, var(--site-background-alt));
+	color: var(--site-text);
 	font-family: 'Cabin', sans-serif;
 	font-size: 16px;
 	font-weight: 500;
@@ -145,15 +168,15 @@ button {
 }
 
 .btn-dark:hover {
-	background: #3a3060;
+	background: color-mix(in srgb, var(--site-accent) 28%, var(--site-background-alt));
 }
 
 .nav-btn-signin {
 	padding: 9px 20px;
-	border: 1px solid #d4d4d4;
+	border: 1px solid var(--site-border);
 	border-radius: 8px;
-	background: #fff;
-	color: #171717;
+	background: var(--site-surface);
+	color: var(--site-text);
 	font-family: 'Manrope', sans-serif;
 	font-size: 15px;
 	font-weight: 700;
@@ -163,26 +186,201 @@ button {
 }
 
 .nav-btn-signin:hover {
-	opacity: 0.85;
+	border-color: var(--site-border-strong);
+	background: color-mix(in srgb, var(--site-accent) 14%, var(--site-surface));
 }
 
 .nav-btn-getstarted {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	padding: 9px 20px;
 	border: none;
-	border-radius: 14px;
-	background: #7b39fc;
-	color: #fafafa;
+	border-radius: 9999px;
+	background: var(--site-accent);
+	color: var(--site-text);
 	font-family: 'Manrope', sans-serif;
 	font-size: 15px;
 	font-weight: 700;
 	cursor: pointer;
-	box-shadow: 0 4px 14px rgba(123, 57, 252, 0.4);
+	box-shadow: 0 4px 14px color-mix(in srgb, var(--site-accent) 42%, transparent);
 	transition: background 0.2s;
 	white-space: nowrap;
+	text-decoration: none;
 }
 
 .nav-btn-getstarted:hover {
-	background: #8f52ff;
+	background: var(--site-accent-strong);
+}
+
+.tagline-badge,
+.hero-headline em,
+.section-title em,
+.step-link,
+.auditbar-name,
+.docs-brand-text,
+.settings-brand-text {
+	color: var(--site-accent);
+}
+
+.tagline-pill,
+.nav-btn-getstarted,
+.btn-primary,
+.btn-dark,
+.nav-btn-signin,
+.step-download-button,
+.auth-submit,
+.audit-new-btn,
+.audit-ai-btn,
+.auditbar-analyze-btn,
+.auditbar-export-btn,
+.auditbar-icon-btn {
+	border-color: var(--site-border);
+}
+
+.site-navbar,
+.site-mobile-menu,
+.docs-sidebar,
+.auditbar,
+.auth-card,
+.settings-sidebar {
+	background: var(--site-surface);
+	border-color: var(--site-border);
+}
+
+.site-nav-cursor {
+	background: var(--site-cursor);
+}
+
+.site-nav-link,
+.site-mobile-menu-item,
+.section-label,
+.section-body,
+.step-title,
+.step-body,
+.auth-copy,
+.auth-input,
+.docs-content,
+.settings-content,
+.audit-page,
+.audit-panel-group p,
+.settings-lead,
+.settings-profile-copy,
+.settings-theme-note {
+	color: var(--site-text);
+}
+
+.step-card,
+.auth-field,
+.docs-step-row,
+.docs-feature-card,
+.docs-faq-card,
+.docs-alert,
+.audit-spec-card,
+.audit-source-shell,
+.audit-preview-card,
+.audit-empty-card,
+.settings-section,
+.settings-profile-card,
+.settings-current-theme,
+.settings-theme-card {
+	background: var(--site-panel);
+	border-color: var(--site-border);
+}
+
+.step-download-button,
+.auth-submit,
+.audit-new-btn,
+.auditbar-analyze-btn,
+.auditbar-export-btn,
+.auditbar-icon-btn {
+	background: var(--site-accent);
+	color: var(--site-text);
+}
+
+.step-download-button:hover,
+.nav-btn-getstarted:hover,
+.audit-new-btn:hover,
+.auditbar-analyze-btn:hover,
+.auditbar-export-btn:hover,
+.auditbar-icon-btn:hover,
+.auth-submit:hover,
+.settings-theme-card:hover,
+.settings-theme-card.is-active {
+	background: var(--site-accent-strong);
+	color: var(--site-text);
+}
+
+.audit-menu-item,
+.docs-nav-item,
+.settings-nav-item {
+	color: var(--site-text-muted);
+}
+
+.audit-menu-item:hover,
+.audit-menu-item.is-active,
+.docs-nav-item:hover,
+.docs-nav-item.is-active,
+.settings-nav-item:hover,
+.settings-nav-item.is-active {
+	color: var(--site-text);
+	border-color: var(--site-border-strong);
+	background: color-mix(in srgb, var(--site-accent) 18%, transparent);
+}
+
+.audit-tab-active,
+.audit-preview-head strong,
+.audit-spec-card h3,
+.audit-panel-block h3,
+.audit-assets-title,
+.docs-badge,
+.docs-alert-icon,
+.docs-nav-item.is-active,
+.settings-badge,
+.settings-profile-avatar,
+.settings-theme-card-head strong {
+	color: var(--site-link);
+}
+
+.auth-page,
+.docs-page,
+.audit-page,
+.settings-page {
+	background: linear-gradient(180deg, var(--site-background) 0%, var(--site-background-alt) 100%);
+}
+
+.auth-page-glow-top,
+.auth-page-glow-bottom {
+	background: color-mix(in srgb, var(--site-accent) 20%, transparent);
+}
+
+.docs-title,
+.docs-section-title,
+.docs-alert-title,
+.docs-feature-card h3,
+.docs-faq-card h3,
+.audit-live-title,
+.audit-capture-text,
+.audit-tag-chip,
+.audit-spec-row strong,
+.audit-preview-code,
+.audit-source-code,
+.audit-asset-item,
+.settings-title,
+.settings-section-head h2,
+.settings-profile-main strong,
+.settings-current-theme strong,
+.settings-theme-card-head span {
+	color: var(--site-text);
+}
+
+.auditbar,
+.docs-sidebar,
+.settings-sidebar,
+.auth-card,
+.site-mobile-menu {
+	backdrop-filter: blur(18px);
+	-webkit-backdrop-filter: blur(18px);
 }
 
 .fu1 {

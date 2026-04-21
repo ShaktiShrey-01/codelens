@@ -1,49 +1,115 @@
 import './Features.css'
-import { Zap, Shield, BarChart2, Globe, Clock, HeartHandshake } from 'lucide-react'
-
-const FEATURES = [
-  { icon: <Zap size={22} color="#7b39fc" />, bg: '#f3edff', title: 'Instant Booking', body: 'Skip the back-and-forth. Confirm your reservation in real time with zero waiting periods.' },
-  { icon: <Shield size={22} color="#0ea97b" />, bg: '#e8faf3', title: 'Secure Payments', body: 'Bank-grade encryption on every transaction. Your card details are never stored on our servers.' },
-  { icon: <BarChart2 size={22} color="#f59e0b" />, bg: '#fff8e8', title: 'Price Insights', body: 'Our AI tracks historical rates and alerts you when prices drop so you always get the best deal.' },
-  { icon: <Globe size={22} color="#3b82f6" />, bg: '#ebf4ff', title: 'Global Coverage', body: 'Properties in 150+ countries and every continent, from urban apartments to remote retreats.' },
-  { icon: <Clock size={22} color="#ef4444" />, bg: '#fff0f0', title: '24/7 Support', body: 'Real humans available around the clock via chat, phone, or email - in your preferred language.' },
-  { icon: <HeartHandshake size={22} color="#ec4899" />, bg: '#fff0f8', title: 'Loyalty Rewards', body: 'Earn points on every booking and redeem them for free nights, upgrades, and exclusive perks.' },
-]
+import { ClipboardPaste } from 'lucide-react'
+import Card from './ui/card'
 
 export default function Features() {
   return (
-    <section className="features-section">
+    <section id="features" className="features-section">
       <div className="content-shell">
         <div className="section-header section-header-center">
-          <span className="section-label">Why Future</span>
+          <span className="section-label">Feature Workflow</span>
           <h2 className="section-title">
-            Everything you need for <em>seamless travel</em>
+            How CodeLens turns a URL into <em>usable code</em>
           </h2>
-          <p className="section-body features-lead">
-            We've packed powerful tools into a beautifully simple experience - spend less time planning, more time
-            exploring.
-          </p>
         </div>
 
-        <div className="feats-grid">
-          {FEATURES.map((feature) => (
-            <div key={feature.title} className="feat-card">
-              <div className="feat-icon" style={{ background: feature.bg }}>{feature.icon}</div>
-              <h3 className="feat-title">{feature.title}</h3>
-              <p className="feat-body">{feature.body}</p>
+        <div className="feature-cards-grid">
+          {/* Step 1: URL input stage mock. */}
+          <div className="feature-card feature-card-pixel">
+            <Card
+              gap={9}
+              speed={22}
+              colors={['#f8fafc', '#c4b5fd', '#7b39fc']}
+              className="feature-card-canvas"
+            />
+            <div className="feature-card-content">
+              <div className="feature-card-head">
+                <div className="feature-card-icon">
+                  <ClipboardPaste size={18} color="#7b39fc" />
+                </div>
+                <h3 className="feature-card-title">Paste Website URL</h3>
+              </div>
+
+              <p className="feature-card-copy">
+                Enter any public website URL you want to analyze with CodeLens.
+              </p>
+
+              <div className="feature-search feature-search-disabled" aria-disabled="true">
+                <input type="text" value="https://example.com" disabled readOnly className="feature-search-input" />
+                <button type="button" disabled className="feature-search-button">
+                  Analyze
+                </button>
+              </div>
             </div>
-          ))}
-        </div>
-
-        <div className="cta-banner">
-          <div>
-            <h3 className="cta-banner-title">Ready to explore the world?</h3>
-            <p className="cta-banner-copy">Join 2 million+ travellers who trust Future for every trip.</p>
           </div>
 
-          <div className="cta-banner-btns">
-            <button className="btn-primary cta-primary">Start for Free</button>
-            <button className="cta-secondary">Watch Demo</button>
+          {/* Step 2: Analysis result preview. */}
+          <div className="feature-card feature-card-pixel">
+            <Card
+              gap={9}
+              speed={22}
+              colors={['#f8fafc', '#c4b5fd', '#7b39fc']}
+              className="feature-card-canvas"
+            />
+            <div className="feature-card-content">
+              <h3 className="feature-card-title">Analyze Design Structure</h3>
+              <p className="feature-card-copy">
+                CodeLens extracts fonts, colors, layout structure and UI components.
+              </p>
+
+              <div className="feature-code-block">
+                <p>
+                  <span className="feature-code-key">Fonts:</span>
+                </p>
+                <p>
+                  <span className="feature-code-key">Font:</span> Inter
+                </p>
+                <p>
+                  <span className="feature-code-key">Size:</span> 13px
+                </p>
+                <p>
+                  <span className="feature-code-key">Weight:</span> 400
+                </p>
+                <p>
+                  <span className="feature-code-key">Font:</span> Inter
+                </p>
+                <p>
+                  <span className="feature-code-key">Size:</span> 12px
+                </p>
+                <p>
+                  <span className="feature-code-key">Weight:</span> 500
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Step 3: Export output preview. */}
+          <div className="feature-card feature-card-pixel">
+            <Card
+              gap={9}
+              speed={22}
+              colors={['#f8fafc', '#c4b5fd', '#7b39fc']}
+              className="feature-card-canvas"
+            />
+            <div className="feature-card-content">
+              <h3 className="feature-card-title">Export Components</h3>
+              <p className="feature-card-copy">
+                Get clean CSS or component code ready for your projects.
+              </p>
+
+              <div className="feature-code-block">
+                <p>
+                  .btn-primary {'{'}
+                </p>
+                <p>
+                  <span className="feature-code-key">background:</span> #3B82F6;
+                </p>
+                <p>
+                  <span className="feature-code-key">padding:</span> 10px 16px;
+                </p>
+                <p>{'}'}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

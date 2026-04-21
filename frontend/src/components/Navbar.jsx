@@ -1,12 +1,17 @@
 import { useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
+import { Link, NavLink } from 'react-router-dom'
 import logo from '../assets/logo11.png'
 import './Navbar.css'
 
-const NAV_LINKS = ['Home', 'Features', 'Docs']
+const NAV_LINKS = [
+  { label: 'Home', to: '/' },
+  { label: 'Features', to: '/#features' },
+  { label: 'Docs', to: '/docs' },
+]
 
-const Tab = ({ children, setPosition }) => {
+const Tab = ({ link, setPosition }) => {
   const ref = useRef(null)
 
   return (
@@ -14,29 +19,33 @@ const Tab = ({ children, setPosition }) => {
       ref={ref}
       onMouseEnter={() => {
         if (!ref.current) return
+        // Measure hovered tab and move the animated cursor pill under it.
         const { width } = ref.current.getBoundingClientRect()
         setPosition({ width, opacity: 1, left: ref.current.offsetLeft })
       }}
       className="site-nav-item"
     >
-      <a href="#" className="site-nav-link">
-        {children}
-      </a>
+      <NavLink to={link.to} className="site-nav-link">
+        {link.label}
+      </NavLink>
     </li>
   )
 }
 
+// Framer Motion animates this element between tab positions through the `animate` prop.
 const NavCursor = ({ position }) => <motion.li animate={position} className="site-nav-cursor" />
 
 const Logo = () => (
-  <div className="site-brand">
+  <Link to="/" className="site-brand">
     <img src={logo} alt="CodeLens logo" className="site-brand-image" />
     <span className="site-brand-text">CodeLens</span>
-  </div>
+  </Link>
 )
 
 export default function Navbar() {
+  // Cursor state drives hover indicator position/size for desktop nav links.
   const [position, setPosition] = useState({ left: 0, width: 0, opacity: 0 })
+  // Mobile menu visibility state.
   const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
@@ -49,9 +58,9 @@ export default function Navbar() {
             className="site-nav-links"
             onMouseLeave={() => setPosition((current) => ({ ...current, opacity: 0 }))}
           >
-            {NAV_LINKS.map((label) => (
-              <Tab key={label} setPosition={setPosition}>
-                {label}
+            {NAV_LINKS.map((link) => (
+              <Tab key={link.label} link={link} setPosition={setPosition}>
+                {link.label}
               </Tab>
             ))}
             <NavCursor position={position} />
@@ -73,6 +82,7 @@ export default function Navbar() {
         <AnimatePresence>
           {mobileOpen && (
             <motion.div
+              // Enter/exit animation for mobile drawer.
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
@@ -80,13 +90,11 @@ export default function Navbar() {
               className="site-mobile-menu"
             >
               <ul className="site-mobile-menu-list">
-                {NAV_LINKS.map((label) => (
-                  <li
-                    key={label}
-                    onClick={() => setMobileOpen(false)}
-                    className="site-mobile-menu-item"
-                  >
-                    {label}
+                {NAV_LINKS.map((link) => (
+                  <li key={link.label} className="site-mobile-menu-item">
+                    <Link to={link.to} onClick={() => setMobileOpen(false)} className="site-nav-link">
+                      {link.label}
+                    </Link>
                   </li>
                 ))}
               </ul>

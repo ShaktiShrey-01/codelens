@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { width: 220px; background: #05070B; color: white; font-family: sans-serif; padding: 16px; margin: 0; }
+    
+    .header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    
+    .main-logo { 
+      width: 28px; 
+      height: 28px; 
+      object-fit: contain;
+    }
+
+    .brand-name { 
+      font-size: 16px; 
+      font-weight: 900; 
+      letter-spacing: 1px; 
+      text-transform: uppercase;
+      background: linear-gradient(to right, #a855f7, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .status { font-size: 11px; color: #94a3b8; margin-bottom: 16px; min-height: 32px; line-height: 1.4; }
+    
+    button {
+      width: 100%; border: none; padding: 12px; border-radius: 10px;
+      font-weight: 700; cursor: pointer; transition: 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+
+    .start-btn { background: #8b5cf6; color: white; }
+    .start-btn:hover { background: #7c3aed; transform: translateY(-1px); }
+
+    .stop-btn { background: #ef4444; color: white; display: none; }
+    .stop-btn:hover { background: #dc2626; transform: translateY(-1px); }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="logo.png" alt="Code Lens Logo" class="main-logo">
+    <div class="brand-name">CodeLens</div>
+  </div>
+
+  <p class="status" id="statusText">Ready to capture design DNA.</p>
+  
+  <button id="startBtn" class="start-btn">🔍 Start Inspecting</button>
+  <button id="stopBtn" class="stop-btn">⏹️ Stop Inspecting</button>
+
+  <script src="popup.js"></script>
+</body>
+</html>

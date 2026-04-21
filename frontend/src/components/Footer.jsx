@@ -1,11 +1,9 @@
 import './Footer.css'
-import { MapPin, Phone, Mail } from 'lucide-react'
+import { Mail, BookOpenText, LifeBuoy } from 'lucide-react'
+import logo from '../assets/logo11.png'
 
-const FOOTER_COLS = {
-  Product: ['Features', 'Pricing', 'Changelog', 'Roadmap', 'API Docs'],
-  Company: ['About Us', 'Careers', 'Press Kit', 'Blog', 'Partners'],
-  Support: ['Help Centre', 'Community', 'Status Page', 'Contact Us', 'Privacy Policy'],
-}
+// Single source for footer links so both quick list and social pills stay in sync.
+const QUICK_LINKS = ['GitHub', 'Docs', 'LinkedIn']
 
 export default function Footer() {
   return (
@@ -14,23 +12,20 @@ export default function Footer() {
         <div className="footer-grid">
           <div className="footer-brand-col">
             <div className="footer-brand-row">
-              <svg className="footer-brand-icon" viewBox="0 0 24 24" fill="none">
-                <path d="M1.04356 6.35771L13.6437 0.666504L20.5 7.5L14.5 13.5L20.5 19.5L13.6437 26.3335L1.04356 20.6423V13.5V6.35771Z" fill="#7b39fc" />
-                <path d="M14.5 13.5H8" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-              <span className="footer-brand-text">Future</span>
+              <img src={logo} alt="CodeLens" className="footer-brand-logo" />
+              <span className="footer-brand-text">CodeLens</span>
             </div>
 
             <p className="footer-description">
-              The intelligent travel platform helping millions discover and book the perfect stay - anywhere in the
-              world.
+              Analyze any public website to extract fonts, color tokens, layout insights, and reusable UI snippets.
             </p>
 
+            {/* Contact/status rows are rendered from data to keep markup compact. */}
             <div className="footer-contact-list">
               {[
-                { icon: <MapPin size={13} />, text: '123 Future Lane, San Francisco, CA' },
-                { icon: <Phone size={13} />, text: '+1 (800) 555-0199' },
-                { icon: <Mail size={13} />, text: 'hello@future.travel' },
+                { icon: <Mail size={14} />, text: 'support@codelens.dev' },
+                { icon: <BookOpenText size={14} />, text: 'docs.codelens.dev' },
+                { icon: <LifeBuoy size={14} />, text: 'Status: All systems operational' },
               ].map((item) => (
                 <div key={item.text} className="footer-contact-item">
                   <span className="footer-contact-icon">{item.icon}</span>
@@ -39,33 +34,32 @@ export default function Footer() {
               ))}
             </div>
 
+            {/* Compact quick links styled as social pills. */}
             <div className="footer-socials">
-              {['X', 'IG', 'in', 'GH'].map((label) => (
-                <button key={label} className="social-btn" aria-label={label} type="button">
+              {QUICK_LINKS.map((label) => (
+                <a key={label} href="#" className="social-btn" aria-label={label}>
                   <span className="social-btn-label">{label}</span>
-                </button>
+                </a>
               ))}
             </div>
           </div>
 
-          {Object.entries(FOOTER_COLS).map(([heading, links]) => (
-            <div key={heading}>
-              <p className="footer-heading">{heading}</p>
-              <ul className="footer-links-list">
-                {links.map((link) => (
-                  <li key={link}>
-                    <a href="#" className="footer-link">
-                      {link}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div className="footer-links-col">
+            <p className="footer-heading">Quick Links</p>
+            <ul className="footer-links-list">
+              {QUICK_LINKS.map((link) => (
+                <li key={link}>
+                  <a href="#" className="footer-link">
+                    {link}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} Future Travel, Inc. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} CodeLens. All rights reserved.</span>
           <div className="footer-bottom-links">
             {['Terms', 'Privacy', 'Cookies'].map((label) => (
               <a key={label} href="#" className="footer-link footer-bottom-link">

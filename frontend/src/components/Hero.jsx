@@ -1,9 +1,12 @@
+import { Link } from 'react-router-dom'
 import Navbar from './Navbar'
+import { isAuthenticated } from '../lib/auth'
 import './Hero.css'
 
 export default function Hero({ children }) {
   return (
     <section className="hero-section">
+      {/* Fixed full-screen video backdrop shared by all sections rendered below. */}
       <video autoPlay loop muted playsInline className="hero-video">
         <source
           src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260210_031346_d87182fb-b0af-4273-84d1-c6fd17d6bf0f.mp4"
@@ -11,29 +14,31 @@ export default function Hero({ children }) {
         />
       </video>
 
+      {/* Overlay keeps text readable against brighter video frames. */}
       <div className="hero-overlay" />
 
       <div className="page-content hero-content">
         <Navbar />
 
         <div className="hero-intro">
-          <div className="tagline-pill fu1">
-            <span className="tagline-badge">New</span>
-            <span className="tagline-text">Say Hello to Datacore v3.2</span>
-          </div>
-
           <h1 className="hero-headline fu2">
-            Book your perfect stay instantly <em>and</em> hassle-free
+            Understand the <em>Design</em> Behind Any <em>Website</em>
           </h1>
 
           <p className="hero-copy fu3">
-            Discover handpicked hotels, resorts, and stays across your favorite destinations. Enjoy exclusive deals,
-            fast booking, and 24/7 support.
+            Paste a website URL to instantly explore its fonts, colors, and UI components.
           </p>
 
-          <div className="hero-actions fu4">
-            <button className="btn-primary">Book a Free Demo</button>
-            <button className="btn-dark">Get Started Now</button>
+          <div className="hero-search fu4">
+            <input
+              type="url"
+              className="hero-search-input"
+              placeholder="Paste any website URL"
+              aria-label="Website URL"
+            />
+            <Link to={isAuthenticated() ? '/audit' : '/login'} className="hero-search-button">
+              Analyze
+            </Link>
           </div>
         </div>
 

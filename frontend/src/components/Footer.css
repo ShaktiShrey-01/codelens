@@ -1,6 +1,6 @@
 .footer-root {
   margin-top: auto;
-  padding: 64px 0 0;
+  padding: 40px 0 0;
   background: transparent;
   color: #c8bfe0;
 }
@@ -11,13 +11,17 @@
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
   gap: 40px;
   padding: 28px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(208, 191, 255, 0.16);
   border-radius: 28px;
-  background: rgba(18, 8, 42, 0.45);
+  background: linear-gradient(145deg, rgba(16, 10, 35, 0.76), rgba(30, 16, 58, 0.56));
   backdrop-filter: blur(16px);
+}
+
+.footer-links-col {
+  align-self: start;
 }
 
 .footer-brand-col {
@@ -29,25 +33,25 @@
 .footer-brand-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
-.footer-brand-icon {
-  width: 22px;
-  height: 22px;
+.footer-brand-logo {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
 }
 
 .footer-brand-text {
   color: #fff;
-  font-family: 'Manrope', sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-family: 'Instrument Serif', serif;
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
 .footer-description {
-  max-width: 260px;
+  max-width: 360px;
   color: rgba(255, 255, 255, 0.72);
   font-size: 14px;
   line-height: 1.7;
@@ -79,8 +83,9 @@
 }
 
 .social-btn {
-  width: 36px;
+  min-width: 36px;
   height: 36px;
+  padding: 0 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -90,6 +95,7 @@
   color: #a899c8;
   cursor: pointer;
   transition: background 0.18s, color 0.18s;
+  text-decoration: none;
 }
 
 .social-btn:hover {
@@ -139,7 +145,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 48px;
+  margin-top: 28px;
   padding: 20px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
   color: rgba(255, 255, 255, 0.72);
@@ -157,11 +163,11 @@
 
 @media (max-width: 768px) {
   .footer-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 
   .footer-brand-col {
-    grid-column: 1 / -1;
+    grid-column: auto;
   }
 }
 
