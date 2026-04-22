@@ -28,6 +28,7 @@
   min-width: 0;
 }
 
+/* 🔥 FIX: Changed height to min-height and added more bottom padding */
 .step-card {
   position: relative;
   overflow: hidden;
@@ -36,8 +37,9 @@
   -webkit-backdrop-filter: blur(18px);
   border: 1.5px solid rgba(237, 232, 255, 0.28);
   border-radius: 20px;
-  padding: 36px 28px;
-  height: 320px;
+  padding: 36px 28px 48px; /* Increased bottom padding to 48px */
+  min-height: 350px; /* Swapped fixed height for min-height */
+  height: auto;
   flex: 1;
   box-shadow: 0 2px 20px rgba(123, 57, 252, 0.06);
   transition: transform 0.22s, box-shadow 0.22s;
@@ -100,7 +102,7 @@
 
 .step-cta {
   margin-top: auto;
-  padding-top: 4px;
+  padding-top: 12px; /* Added spacing above the button */
 }
 
 .step-link {
@@ -196,8 +198,8 @@
   }
 
   .step-cta {
-    margin-top: 0;
-    padding-top: 0;
+    margin-top: auto;
+    padding-top: 14px;
   }
 
   .connector {
