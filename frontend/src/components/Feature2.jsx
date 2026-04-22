@@ -108,6 +108,24 @@ export default function Feature2() {
             ))}
           </div>
         </div>
+
+        {/* 🔥 NEW AUTO-PLAYING VIDEO SECTION 🔥 */}
+        <div className="feature2-video-wrapper">
+          <h2 className="feature2-video-heading">
+            See <em>CodeLens</em> in Action
+          </h2>
+          <div className="feature2-video-container">
+            <video
+              src="/demo.mp4" /* <-- Change this to your actual file name */
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="feature2-video"
+            />
+          </div>
+        </div>
+
       </div>
     </section>
   )

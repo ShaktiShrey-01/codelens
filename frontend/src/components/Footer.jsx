@@ -4,7 +4,11 @@ import { Mail, BookOpenText, LifeBuoy } from 'lucide-react'
 import logo from '../assets/logo11.png'
 
 // Single source for footer links so both quick list and social pills stay in sync.
-const QUICK_LINKS = ['GitHub', 'Docs', 'LinkedIn']
+const QUICK_LINKS = [
+  { label: 'GitHub', href: 'https://github.com/ShaktiShrey-01', external: true },
+  { label: 'Docs', href: '/docs', external: false },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/shakti33/', external: true }
+]
 
 export default function Footer() {
   return (
@@ -37,9 +41,16 @@ export default function Footer() {
 
             {/* Compact quick links styled as social pills. */}
             <div className="footer-socials">
-              {QUICK_LINKS.map((label) => (
-                <a key={label} href="#" className="social-btn" aria-label={label}>
-                  <span className="social-btn-label">{label}</span>
+              {QUICK_LINKS.map((link) => (
+                <a 
+                  key={link.label} 
+                  href={link.href} 
+                  className="social-btn" 
+                  aria-label={link.label}
+                  target={link.external ? "_blank" : undefined}
+                  rel={link.external ? "noopener noreferrer" : undefined}
+                >
+                  <span className="social-btn-label">{link.label}</span>
                 </a>
               ))}
             </div>
@@ -49,9 +60,14 @@ export default function Footer() {
             <p className="footer-heading">Quick Links</p>
             <ul className="footer-links-list">
               {QUICK_LINKS.map((link) => (
-                <li key={link}>
-                  <a href="#" className="footer-link">
-                    {link}
+                <li key={link.label}>
+                  <a 
+                    href={link.href} 
+                    className="footer-link"
+                    target={link.external ? "_blank" : undefined}
+                    rel={link.external ? "noopener noreferrer" : undefined}
+                  >
+                    {link.label}
                   </a>
                 </li>
               ))}

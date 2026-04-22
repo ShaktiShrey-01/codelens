@@ -175,6 +175,52 @@
   line-height: 1.42;
 }
 
+/* 🔥 NEW VIDEO SECTION STYLES 🔥 */
+.feature2-video-wrapper {
+  margin-top: 80px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.feature2-video-heading {
+  color: #f6f8ff;
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(32px, 5vw, 56px);
+  margin-bottom: 32px;
+  font-weight: 400;
+}
+
+.feature2-video-heading em {
+  color: #a855f7; /* Matches CodeLens Purple */
+  font-style: italic;
+}
+
+.feature2-video-container {
+  width: 100%;
+  max-width: 1000px;
+  position: relative;
+  border-radius: 24px;
+  padding: 8px; /* Creates the outer glass border effect */
+  background: rgba(3, 8, 24, 0.6);
+  border: 1px solid rgba(88, 140, 255, 0.28);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.feature2-video {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  display: block;
+  border: 1px solid rgba(148, 171, 226, 0.16);
+  object-fit: cover;
+  background-color: #000; /* Fallback color while loading */
+}
+
+/* Media Queries */
 @media (max-width: 1024px) {
   .feature2-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -255,5 +301,23 @@
 
   .feature2-copy {
     font-size: 13px;
+  }
+  
+  /* Mobile Video Adjustments */
+  .feature2-video-wrapper {
+    margin-top: 50px;
+  }
+  
+  .feature2-video-heading {
+    margin-bottom: 20px;
+  }
+  
+  .feature2-video-container {
+    border-radius: 16px;
+    padding: 4px;
+  }
+  
+  .feature2-video {
+    border-radius: 12px;
   }
 }
