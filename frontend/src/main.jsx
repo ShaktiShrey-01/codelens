@@ -1,3 +1,4 @@
+// App entrypoint: applies theme variables and hydrates cookie-based auth before routing.
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
@@ -9,10 +10,10 @@ import Audit from './pages/Audit.jsx'
 import Settings from './pages/Settings.jsx'
 import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
-import { isAuthenticated } from './lib/auth'
-import { selectTheme, themeStorageKey } from './store/themeSlice'
+import { hydrateAuthSession, isAuthenticated } from './lib/auth'
+import { selectTheme } from './store/themeSlice'
 import { store } from './store/store'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 function ThemeBridge() {
   const theme = useSelector(selectTheme)
@@ -42,17 +43,32 @@ function ThemeBridge() {
 
     root.dataset.theme = theme.id
     body.dataset.theme = theme.id
-
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem(themeStorageKey, theme.id)
-    }
   }, [theme])
 
   return null
 }
 
-function ProtectedAuditRoute() {
-  return isAuthenticated() ? <Audit /> : <Navigate to="/login" replace />
+function SessionBootstrap({ children }) {
+  const [ready, setReady] = useState(false)
+
+  useEffect(() => {
+    const boot = async () => {
+      await hydrateAuthSession()
+      setReady(true)
+    }
+
+    boot()
+  }, [])
+
+  if (!ready) {
+    return null
+  }
+
+  return children
+}
+
+function ProtectedRoute({ children }) {
+  return isAuthenticated() ? children : <Navigate to="/login" replace />
 }
 
 function AuthRoute({ children }) {
@@ -63,18 +79,20 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
       <ThemeBridge />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/docs" element={<Docs />} />
-          <Route path="/audit" element={<ProtectedAuditRoute />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/liveaudit" element={<Audit />} />
-          <Route path="/login" element={<AuthRoute><Login /></AuthRoute>} />
-          <Route path="/signup" element={<AuthRoute><Signup /></AuthRoute>} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </BrowserRouter>
+      <SessionBootstrap>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/docs" element={<Docs />} />
+            <Route path="/audit" element={<ProtectedRoute><Audit /></ProtectedRoute>} />
+            <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+            <Route path="/liveaudit" element={<Audit />} />
+            <Route path="/login" element={<AuthRoute><Login /></AuthRoute>} />
+            <Route path="/signup" element={<AuthRoute><Signup /></AuthRoute>} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </BrowserRouter>
+      </SessionBootstrap>
     </Provider>
   </StrictMode>,
 )

@@ -1,3 +1,4 @@
+// Live Audit page: receives captured element payloads, renders specs, and generates CSS/Tailwind code snippets.
 import { useEffect, useMemo, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { Check, Copy, Folder, Palette, Ruler, Search, Settings2, Type, Sparkles, Loader2, Code2 } from 'lucide-react'
@@ -62,18 +63,13 @@ export default function Audit() {
   const [aiInsight, setAiInsight] = useState("")
   const [isAiLoading, setIsAiLoading] = useState(false)
   
-  const [credits, setCredits] = useState(() => {
-    const saved = localStorage.getItem('codelens_credits');
-    return saved !== null ? parseInt(saved, 10) : 15;
-  });
+  // Credits now live only in session memory (no browser storage).
+  const [credits, setCredits] = useState(15)
 
   const location = useLocation()
 
   useEffect(() => {
-    localStorage.setItem('codelens_credits', credits.toString());
-  }, [credits]);
-
-  useEffect(() => {
+    // Parses extension payload from URL query so the dashboard can render without shared global state.
     const applyInspection = (payload) => {
       if (!payload || typeof payload !== 'object') return
       setInspection(mapPayloadToInspection(payload))
@@ -105,6 +101,7 @@ export default function Audit() {
     setIsAiLoading(true);
     setAiInsight(""); 
 
+    // Sends extracted design DNA to backend AI endpoint and stores generated component code.
     try {
       const response = await fetch('http://localhost:5000/api/ai-insight', {
         method: 'POST',
@@ -146,6 +143,7 @@ export default function Audit() {
     if (!inspection) return ''
     const tag = inspection.tag.toLowerCase()
 
+    // Tailwind generator maps extracted token values into utility classes.
     if (codeTab === 'TAILWIND') {
       const tw = []
       if (inspection.radius && inspection.radius !== '0px') tw.push(`rounded-[${inspection.radius}]`)
@@ -160,10 +158,12 @@ export default function Audit() {
       return `<${tag}${classStr}>\n  ${inspection.label}\n</${tag}>`
     }
 
+    // CSS generator mirrors captured values for direct copy/paste usage.
     return `<${tag} className="extracted-${tag}">\n  ${inspection.label}\n</${tag}>\n\n/* CSS */\n.extracted-${tag} {\n  background-color: ${inspection.background};\n  color: ${inspection.color};\n  border-radius: ${inspection.radius};\n  padding: ${inspection.padding};\n  font-size: ${inspection.fontSize};\n}`
   }, [inspection, codeTab])
 
   const handleCopy = async () => {
+    // Copies currently selected generated code tab (CSS or Tailwind) into clipboard.
     if (!generatedCode) return
     try {
       await navigator.clipboard.writeText(generatedCode)
@@ -176,6 +176,7 @@ export default function Audit() {
 
   // Copy AI Code Function
   const handleCopyAi = async () => {
+    // Copies AI block as raw code by stripping markdown wrappers if present.
     if (!aiInsight) return
     try {
       await navigator.clipboard.writeText(aiInsight.replace(/```[a-z]*\n?/g, '').replace(/```/g, '').trim())
@@ -190,6 +191,7 @@ export default function Audit() {
       alert("No data to export! Please capture an element first.");
       return;
     }
+    // Exports the currently inspected DNA as JSON for reuse in other projects.
     const exportData = JSON.stringify(inspection, null, 2);
     const blob = new Blob([exportData], { type: "application/json" });
     const url = URL.createObjectURL(blob);

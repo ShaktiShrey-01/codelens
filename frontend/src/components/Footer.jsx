@@ -1,3 +1,4 @@
+// Footer block with contact/status metadata and quick navigation links.
 import './Footer.css'
 import { Mail, BookOpenText, LifeBuoy } from 'lucide-react'
 import logo from '../assets/logo11.png'

@@ -1,3 +1,4 @@
+// Animated pixel canvas background used by onboarding/feature cards.
 import React, { useEffect, useRef } from 'react'
 import './card.css'
 

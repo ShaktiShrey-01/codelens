@@ -1,6 +1,5 @@
+// Redux theme slice controlling appearance tokens used across the app UI.
 import { createSlice } from '@reduxjs/toolkit'
-
-const THEME_STORAGE_KEY = 'codelens-theme'
 
 export const THEMES = {
   cyberpunk: {
@@ -100,14 +99,8 @@ export const THEMES = {
   },
 }
 
-const loadThemeId = () => {
-  if (typeof window === 'undefined') return 'cyberpunk'
-  const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY)
-  return THEMES[savedTheme] ? savedTheme : 'cyberpunk'
-}
-
 const initialState = {
-  themeId: loadThemeId(),
+  themeId: 'cyberpunk',
 }
 
 const themeSlice = createSlice({
@@ -124,7 +117,6 @@ const themeSlice = createSlice({
 
 export const { setTheme } = themeSlice.actions
 export const themeReducer = themeSlice.reducer
-export const themeStorageKey = THEME_STORAGE_KEY
 
 export const THEME_OPTIONS = Object.values(THEMES)
 

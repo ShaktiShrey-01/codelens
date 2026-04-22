@@ -1,3 +1,4 @@
+// Hero section: renders landing video background, headline, and primary analyze CTA.
 import { Link } from 'react-router-dom'
 import Navbar from './Navbar'
 import { isAuthenticated } from '../lib/auth'

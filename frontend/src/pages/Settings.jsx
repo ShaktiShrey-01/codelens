@@ -1,9 +1,10 @@
-import { useMemo } from 'react'
+// Settings page: shows backend profile data, handles logout, and controls visual theme selection.
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ChevronRight, LayoutDashboard, Palette, Settings2, User2 } from 'lucide-react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import logo from '../assets/logo11.png'
-import { getUserEmail } from '../lib/auth'
+import { clearAuthenticated, clearUserEmail, setUserProfile } from '../lib/auth'
 import { selectTheme, selectThemeId, setTheme, THEME_OPTIONS } from '../store/themeSlice'
 import './Settings.css'
 
@@ -20,10 +21,55 @@ const SIDEBAR_GROUPS = [
 ]
 
 export default function Settings() {
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const activeThemeId = useSelector(selectThemeId)
   const activeTheme = useSelector(selectTheme)
-  const userEmail = useMemo(() => getUserEmail(), [])
+  const [profile, setProfile] = useState({ username: 'Loading...', email: 'Loading...' })
+  const [profileError, setProfileError] = useState('')
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await fetch(`${apiBaseUrl}/api/v1/users/me`, {
+          method: 'GET',
+          credentials: 'include',
+        })
+
+        if (!response.ok) {
+          throw new Error('Unable to load profile.')
+        }
+
+        const data = await response.json()
+        setUserProfile(data?.user || null)
+        setProfile({
+          username: data?.user?.username || 'User',
+          email: data?.user?.email || 'N/A',
+        })
+      } catch (_error) {
+        setProfileError('Unable to fetch profile from backend.')
+        setProfile({ username: 'User', email: 'N/A' })
+      }
+    }
+
+    fetchProfile()
+  }, [apiBaseUrl])
+
+  const handleLogout = async () => {
+    try {
+      await fetch(`${apiBaseUrl}/api/v1/users/logout`, {
+        method: 'POST',
+        credentials: 'include',
+      })
+    } catch (_error) {
+      // Local cleanup still runs even if backend request fails.
+    } finally {
+      clearAuthenticated()
+      clearUserEmail()
+      navigate('/login', { replace: true })
+    }
+  }
 
   return (
     <div className="settings-page">
@@ -73,13 +119,21 @@ export default function Settings() {
                   <User2 size={18} />
                 </div>
                 <div>
-                  <p className="settings-profile-label">User email</p>
-                  <strong>{userEmail}</strong>
+                  <p className="settings-profile-label">Username</p>
+                  <strong>{profile.username}</strong>
                 </div>
               </div>
+              <div>
+                <p className="settings-profile-label">User email</p>
+                <strong>{profile.email}</strong>
+              </div>
+              {profileError && <p className="settings-profile-error">{profileError}</p>}
               <p className="settings-profile-copy">
                 This email is used for account identification and future profile-linked exports.
               </p>
+              <button type="button" className="settings-logout-btn" onClick={handleLogout}>
+                Logout
+              </button>
             </div>
           </section>
 

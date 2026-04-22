@@ -1,3 +1,4 @@
+// Home page shell that composes all landing sections and hash-based smooth scrolling.
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import Hero from '../components/Hero'

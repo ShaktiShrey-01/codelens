@@ -1,3 +1,4 @@
+// Capability grid highlighting concrete extraction outputs produced by CodeLens.
 import './Feature2.css'
 import { Clock3, Search, Code2 } from 'lucide-react'
 import Card from './ui/card'

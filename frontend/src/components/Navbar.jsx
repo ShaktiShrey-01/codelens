@@ -1,8 +1,10 @@
+// Marketing navbar: desktop hover cursor nav and animated mobile drawer menu.
 import { useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { Link, NavLink } from 'react-router-dom'
 import logo from '../assets/logo11.png'
+import { isAuthenticated } from '../lib/auth'
 import './Navbar.css'
 
 const NAV_LINKS = [
@@ -43,6 +45,8 @@ const Logo = () => (
 )
 
 export default function Navbar() {
+  const getStartedPath = isAuthenticated() ? '/audit' : '/login'
+
   // Cursor state drives hover indicator position/size for desktop nav links.
   const [position, setPosition] = useState({ left: 0, width: 0, opacity: 0 })
   // Mobile menu visibility state.
@@ -67,7 +71,7 @@ export default function Navbar() {
           </ul>
 
           <div className="site-nav-actions">
-            <button className="nav-btn-getstarted">Get Started</button>
+            <Link to={getStartedPath} className="nav-btn-getstarted">Get Started</Link>
           </div>
 
           <button
@@ -99,7 +103,13 @@ export default function Navbar() {
                 ))}
               </ul>
               <div className="site-mobile-menu-actions">
-                <button className="nav-btn-getstarted site-mobile-action">Get Started</button>
+                <Link
+                  to={getStartedPath}
+                  onClick={() => setMobileOpen(false)}
+                  className="nav-btn-getstarted site-mobile-action"
+                >
+                  Get Started
+                </Link>
               </div>
             </motion.div>
           )}

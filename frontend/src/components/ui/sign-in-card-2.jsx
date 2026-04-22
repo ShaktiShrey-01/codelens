@@ -1,3 +1,4 @@
+// Shared auth form component for login/signup wired to backend cookie-session endpoints.
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -10,6 +11,7 @@ function Input({ className = '', type = 'text', ...props }) {
 }
 
 export function Component({ mode = 'login' }) {
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState('')
@@ -42,7 +44,7 @@ export function Component({ mode = 'login' }) {
     return nextErrors
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
 
     const nextErrors = validateForm()
@@ -53,12 +55,42 @@ export function Component({ mode = 'login' }) {
     }
 
     setIsLoading(true)
-    window.setTimeout(() => {
+
+    try {
+      const endpoint = isSignup ? '/api/v1/users/register' : '/api/v1/users/login'
+      const payload = isSignup
+        ? { username: name.trim(), email: email.trim(), password }
+        : { email: email.trim(), password }
+
+      const response = await fetch(`${apiBaseUrl}${endpoint}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(payload),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        setErrors((current) => ({
+          ...current,
+          form: data.error || 'Authentication failed. Please try again.',
+        }))
+        return
+      }
+
       setAuthenticated(true)
-      setUserEmail(email.trim())
+      setUserEmail(data?.user?.email || email.trim())
       setIsLoading(false)
       navigate('/audit')
-    }, 1200)
+    } catch (_error) {
+      setErrors((current) => ({
+        ...current,
+        form: 'Unable to connect to server. Please try again.',
+      }))
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -152,10 +184,6 @@ export function Component({ mode = 'login' }) {
 
             {!isSignup && (
               <div className="auth-row">
-                <label className="auth-checkbox">
-                  <input type="checkbox" />
-                  <span>Remember me</span>
-                </label>
                 <Link to="/signup" className="auth-link">
                   Create account
                 </Link>
@@ -170,6 +198,8 @@ export function Component({ mode = 'login' }) {
                 </Link>
               </div>
             )}
+
+            {errors.form && <p className="auth-error">{errors.form}</p>}
 
             <motion.button
               whileHover={{ scale: 1.01 }}

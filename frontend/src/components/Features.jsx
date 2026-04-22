@@ -1,3 +1,4 @@
+// Workflow feature cards describing the high-level analyze pipeline.
 import './Features.css'
 import { ClipboardPaste } from 'lucide-react'
 import Card from './ui/card'

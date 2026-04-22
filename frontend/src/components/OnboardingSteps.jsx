@@ -1,3 +1,4 @@
+// Onboarding steps: shows extension setup flow and triggers extension zip download.
 import './OnboardingSteps.css'
 import Card from './ui/card'
 

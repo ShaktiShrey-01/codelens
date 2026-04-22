@@ -1,3 +1,4 @@
+// Audit workspace top bar: URL input, analyze trigger, export action, and settings shortcut.
 import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Download, Search, Settings2, Zap } from 'lucide-react'

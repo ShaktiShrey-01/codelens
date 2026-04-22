@@ -1,3 +1,4 @@
+// Documentation page with sidebar navigation and static product usage guidance.
 import { BookOpen, Zap, Cpu, Code2, Box, Info, ChevronRight } from 'lucide-react'
 import logo from '../assets/logo11.png'
 import './Docs.css'
